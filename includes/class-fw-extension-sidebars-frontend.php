@@ -101,6 +101,11 @@ class _FW_Extension_Sidebars_Frontend
 	public function get_current_page_preset()
 	{
 
+		$result = $this->_fw_check_conditional_tags('first');
+		if ($result) {
+			return $result;
+		}
+
 		if (is_singular()){
 			$data['type']     = $this->config->get_type_by_prefix(_FW_Extension_Sidebars_Config::POST_TYPES_PREFIX);
 			$data['sub_type'] = get_post_type();
@@ -121,20 +126,6 @@ class _FW_Extension_Sidebars_Frontend
 				return $result;
 		}
 
-		//was disabled from config
-		{
-			if (is_tag()) {
-				$term_obj         = get_term_by('slug', get_query_var('tag'), 'post_tag');
-				$data['type']     = $this->config->get_type_by_prefix(_FW_Extension_Sidebars_Config::TAXONOMIES_PREFIX);
-				$data['sub_type'] = $term_obj->taxonomy;
-				$data['id']       = $term_obj->term_id;
-
-				$result           = $this->get_preset_sidebars($data);
-				if ( $result )
-					return $result;
-			}
-		}
-
 		if (is_tax()) {
 			$term_obj         = get_term_by('slug', get_query_var('term'), get_query_var('taxonomy'));
 			$data['type']     = $this->config->get_type_by_prefix(_FW_Extension_Sidebars_Config::TAXONOMIES_PREFIX);
@@ -146,7 +137,19 @@ class _FW_Extension_Sidebars_Frontend
 				return $result;
 		}
 
-		$conditional_tags = $this->config->get_conditional_tags();
+		$result = $this->_fw_check_conditional_tags('last');
+		if ($result) {
+			return $result;
+		}
+
+		$data['type'] = $this->config->get_type_by_prefix(_FW_Extension_Sidebars_Config::DEFAULT_PREFIX);
+		$data['sub_type'] = _FW_Extension_Sidebars_Config::DEFAULT_SUB_TYPE;
+		$result = $this->get_preset_sidebars($data); //return preset default for all pages
+		return $result;
+	}
+
+	private function _fw_check_conditional_tags($priority) {
+		$conditional_tags = $this->config->get_conditional_tags($priority);
 
 		foreach($conditional_tags as $key => $cond_tag)
 		{
@@ -188,11 +191,6 @@ class _FW_Extension_Sidebars_Frontend
 			}
 
 		}
-
-		$data['type'] = $this->config->get_type_by_prefix(_FW_Extension_Sidebars_Config::DEFAULT_PREFIX);
-		$data['sub_type'] = _FW_Extension_Sidebars_Config::DEFAULT_SUB_TYPE;
-		$result = $this->get_preset_sidebars($data); //return preset default for all pages
-		return $result;
 	}
 
 	/**

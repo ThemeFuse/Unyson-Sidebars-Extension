@@ -22,14 +22,15 @@ class _FW_Extension_Sidebars_Backend {
 	public function __construct() {
 		//get static registered sidebars, which are registered before fw loaded
 		global $wp_registered_sidebars;
+		$this->wp_option_sidebar_settings = fw()->extensions->get( 'sidebars' )->get_fw_option_sidebars_settings_key();
+		$this->config                     = new _FW_Extension_Sidebars_Config();
+
 		if ( is_array( $wp_registered_sidebars ) ) {
 			foreach ( $wp_registered_sidebars as $sidebar_args ) {
 				$this->set_static_sidebars( $sidebar_args );
 			}
 		}
 
-		$this->wp_option_sidebar_settings = fw()->extensions->get( 'sidebars' )->get_fw_option_sidebars_settings_key();
-		$this->config                     = new _FW_Extension_Sidebars_Config();
 	}
 
 	public function init_sidebars() {

@@ -44,6 +44,7 @@ class FW_Extension_Sidebars extends FW_Extension
 	private function add_theme_actions() {
 		if ($this->is_missing_config()) {
 			add_filter( 'sidebars_widgets', array( $this->get_frontend_instance(), 'replace_sidebars' ) );
+
 		}
 	}
 

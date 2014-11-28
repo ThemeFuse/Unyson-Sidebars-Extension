@@ -523,7 +523,7 @@ class _FW_Extension_Sidebars_Backend {
 		return $result;
 	}
 
-	public function preset_timestamp_cmp( $a, $b ) {
+	private function preset_timestamp_cmp( $a, $b ) {
 		if ( $a['timestamp'] === $b['timestamp'] ) {
 			return 0;
 		}
@@ -584,7 +584,7 @@ class _FW_Extension_Sidebars_Backend {
 				$result[ $id ] = empty( $vars[ $field_name ] ) ? '#' . $id . __( ' (no title)',
 						'fw' ) : $vars[ $field_name ];
 			} else {
-				$result[ $id ] = $prefix . '_' . $sub_type . '_' . $id; // fixme
+				$result[ $id ] = $prefix . '_' . $sub_type . '_' . $id;
 			}
 		}
 	}

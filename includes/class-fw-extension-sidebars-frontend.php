@@ -13,13 +13,28 @@ class _FW_Extension_Sidebars_Frontend
 
 	private $wp_option_sidebar_settings;
 
+	private $after_widgets_init;
+
 	public function __construct()
 	{
 		$this->wp_option_sidebar_settings = fw()->extensions->get( 'sidebars' )->get_fw_option_sidebars_settings_key();
 		$this->config = new _FW_Extension_Sidebars_Config();
+		$this->register_actions();
+	}
+
+	private function register_actions() {
+		add_action('widgets_init', array($this, '_fw_enable_replace'));
+	}
+
+	public function _fw_enable_replace() {
+		$this->after_widgets_init = true;
 	}
 
 	public function replace_sidebars( $sidebars_widgets ) {
+		if ( !$this->after_widgets_init ) {
+			return $sidebars_widgets;
+		}
+
 		$db_settings = $this->get_db();
 
 
@@ -100,13 +115,12 @@ class _FW_Extension_Sidebars_Frontend
 	 */
 	public function get_current_page_preset()
 	{
-
 		$result = $this->_fw_check_conditional_tags('first');
 		if ($result) {
 			return $result;
 		}
 
-		if (is_singular()){
+		if (is_singular() || is_home() ){
 			$data['type']     = $this->config->get_type_by_prefix(_FW_Extension_Sidebars_Config::POST_TYPES_PREFIX);
 			$data['sub_type'] = get_post_type();
 			$data['id']       = get_the_id();

@@ -29,8 +29,8 @@ class _FW_Extension_Sidebars_Config
 	 * Conditional tag with params example
 	 *
 	'front_page_slug'  => array(
-		'order_option'  => 1,
-		'check_priority' => 'last' // type string  'first' | 'last', //required
+		'order_option'  => 1, - optional: default 1 position in the other lists
+		'check_priority' => 'last' // type string  'first' | 'last', - optional: defaults 'last'
 		'name'                  => 'Pages with Front-Page template',
 		'conditional_tag'		=> array(
 			'callback'				=> 'is_page_template',

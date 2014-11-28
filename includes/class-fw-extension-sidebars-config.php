@@ -119,6 +119,7 @@ class _FW_Extension_Sidebars_Config
 		$this->config['sidebar_positions']    = fw_akg('sidebar_positions', $user_config, array() );
 		$this->config['dynamic_sidebar_args'] = fw_akg('dynamic_sidebar_args', $user_config, array() );
 		$this->config = array_merge($this->config, $this->get_config_defaults());
+		$this->config['select_options']['conditional_tags'] = apply_filters('fw_ext_sidebars_conditional_tags', $this->config['select_options']['conditional_tags']);
 
 	}
 
@@ -389,7 +390,7 @@ class _FW_Extension_Sidebars_Config
 
 	public function get_conditional_tags($priority = null)
 	{
-		$conditional_tags = apply_filters('fw_ext_sidebars_conditional_tags', fw_akg('select_options/conditional_tags', $this->config, array()) ) ;
+		$conditional_tags = fw_akg('select_options/conditional_tags', $this->config, array()) ;
 
 		if ($priority) {
 			foreach($conditional_tags as $key => $conditional_tag) {

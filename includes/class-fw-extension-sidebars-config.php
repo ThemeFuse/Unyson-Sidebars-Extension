@@ -120,7 +120,19 @@ class _FW_Extension_Sidebars_Config
 		$this->config['dynamic_sidebar_args'] = fw_akg('dynamic_sidebar_args', $user_config, array() );
 		$this->config = array_merge($this->config, $this->get_config_defaults());
 		$this->config['select_options']['conditional_tags'] = apply_filters('fw_ext_sidebars_conditional_tags', $this->config['select_options']['conditional_tags']);
+		$this->_fw_set_conditional_tags_defaults($this->config['select_options']['conditional_tags']);
 
+	}
+
+	private function _fw_set_conditional_tags_defaults(&$conditional_tags) {
+		foreach($conditional_tags as &$conditional_tag) {
+			if (!isset($conditional_tag['check_priority']) and empty($conditional_tag['check_priority'])) {
+				$conditional_tag['check_priority'] = 'last';
+			}
+			if (!isset($conditional_tag['order_option']) or !preg_match('/^\d+$/', $conditional_tag['order_option'])) {
+				$conditional_tag['order_option'] = 1;
+			}
+		}
 	}
 
 	public function get_dynamic_sidebar_args()
@@ -388,6 +400,11 @@ class _FW_Extension_Sidebars_Config
 		return (isset($this->config['sidebar_positions'][$position]) and is_array($this->config['sidebar_positions'][$position]));
 	}
 
+	/**
+	 * @param $priority null| string
+	 *
+	 * @return mixed|null
+	 */
 	public function get_conditional_tags($priority = null)
 	{
 		$conditional_tags = fw_akg('select_options/conditional_tags', $this->config, array()) ;

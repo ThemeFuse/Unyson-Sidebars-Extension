@@ -96,7 +96,8 @@ class _FW_Extension_Sidebars_Backend {
 			$sidebars_array = $this->get_db();
 			if ( isset( $sidebars_array['sidebars'] ) && count( $sidebars_array['sidebars'] ) ) {
 				foreach ( $sidebars_array['sidebars'] as $sidebar_args ) {
-					$sidebar_args                          = array_merge( $dynamic_sidebars_args, $sidebar_args ); //merge DB settings with config settings
+					$sidebar_args                          = array_merge( $dynamic_sidebars_args,
+						$sidebar_args ); //merge DB settings with config settings
 					$this->sidebars[ $sidebar_args['id'] ] = new _FW_Extension_Sidebars_Model_Sidebar( $sidebar_args );
 				}
 				unset( $sidebars_array );
@@ -165,7 +166,8 @@ class _FW_Extension_Sidebars_Backend {
 			$preset = fw_akg( $db_key['path'] . '/by_ids/' . $args['preset'], $db );
 			if ( ! empty( $preset ) ) {
 				$singular_label = $this->config->get_label_singular( $db_key['type'], $db_key['sub_type'] );
-				$ids_list       = $this->build_preset_ids_list( $db_key['prefix'], $preset['ids'], $db_key['sub_type'] );
+				$ids_list       = $this->build_preset_ids_list( $db_key['prefix'], $preset['ids'],
+					$db_key['sub_type'] );
 
 				$result['by_ids'][] = array(
 					'slug' => $singular_label,
@@ -271,7 +273,12 @@ class _FW_Extension_Sidebars_Backend {
 		if ( $sidebar_used_key !== false ) {
 			return array(
 				'status'  => false,
-				'message' => __( 'The placeholder can\'t be deleted because it is used in one of sidebars below.<br/> <br/> <b>Please replace it first so that you will not have visual gaps in your layout.<b/>', 'fw' )
+				'message' => __( "The placeholder can't be deleted because it is used in one of sidebars below.",
+						'fw' ) .
+				             "<br/><br/><b>" .
+				             __( 'Please replace it first so that you will not have visual gaps in your layout.',
+					             'fw' ) .
+				             "<b/>"
 			);
 		}
 
@@ -300,11 +307,11 @@ class _FW_Extension_Sidebars_Backend {
 		switch ( $search_type ) {
 			case 'post_types':
 				$wp_query = new WP_Query( array(
-						'post_type'                       => $search_sub_type,
-						'fw_ext_sidebars_post_title_like' => $search_term,
-						'numberposts'                     => $max_autocomplete_results,
-						'post_status'                     => 'any'
-					) );
+					'post_type'                       => $search_sub_type,
+					'fw_ext_sidebars_post_title_like' => $search_term,
+					'numberposts'                     => $max_autocomplete_results,
+					'post_status'                     => 'any'
+				) );
 				$items    = $wp_query->get_posts();
 				wp_reset_query();
 				foreach ( $items as $item ) {
@@ -316,10 +323,10 @@ class _FW_Extension_Sidebars_Backend {
 
 			case 'taxonomies':
 				$items = get_terms( $search_sub_type, array(
-						'name__like' => $search_term,
-						'hide_empty' => false,
-						'number'     => $max_autocomplete_results
-					) );
+					'name__like' => $search_term,
+					'hide_empty' => false,
+					'number'     => $max_autocomplete_results
+				) );
 				foreach ( $items as $item ) {
 					$result['items'][ $item->term_id ] = $item->name;
 				}
@@ -337,7 +344,9 @@ class _FW_Extension_Sidebars_Backend {
 	public function recursive_array_search( $needle, $haystack ) {
 		foreach ( $haystack as $key => $value ) {
 			$current_key = $key;
-			if ( $needle === $value OR ( is_array( $value ) && $this->recursive_array_search( $needle, $value ) !== false ) ) {
+			if ( $needle === $value OR ( is_array( $value ) && $this->recursive_array_search( $needle,
+						$value ) !== false )
+			) {
 				return $current_key;
 			}
 		}
@@ -479,7 +488,9 @@ class _FW_Extension_Sidebars_Backend {
 						$preset = fw_akg( $db_key['path'] . '/by_ids/' . $preset_id, $settings );
 						if ( is_array( $preset ) ) {
 							$singular_label = $this->config->get_label_singular( $db_key['type'], $db_key['sub_type'] );
-							$page_names     = reset( $singular_label ) . ' - ' . implode( ', ', $this->build_preset_ids_list( $db_key['prefix'], $preset['ids'], $db_key['sub_type'] ) );
+							$page_names     = reset( $singular_label ) . ' - ' . implode( ', ',
+									$this->build_preset_ids_list( $db_key['prefix'], $preset['ids'],
+										$db_key['sub_type'] ) );
 
 							$result[ $preset_id ] = array(
 								'label'      => reset( $singular_label ),
@@ -500,7 +511,8 @@ class _FW_Extension_Sidebars_Backend {
 				$grouped_label = $this->config->get_label_grouped( $db_key['type'], $db_key['sub_type'] );
 				$result[]      = array(
 					'type'      => $slug,
-					'label'     => $db_key['sub_type'] === 'common' ? __( 'Default for all pages', 'fw' ) : reset( $grouped_label ),
+					'label'     => $db_key['sub_type'] === 'common' ? __( 'Default for all pages',
+						'fw' ) : reset( $grouped_label ),
 					'timestamp' => isset( $preset['timestamp'] ) ? $preset['timestamp'] : 0
 				);
 			}
@@ -569,7 +581,8 @@ class _FW_Extension_Sidebars_Backend {
 		if ( ! empty( $obj ) ) {
 			$vars = get_object_vars( $obj );
 			if ( isset( $vars[ $field_name ] ) ) {
-				$result[ $id ] = empty( $vars[ $field_name ] ) ? '#' . $id . __( ' (no title)', 'fw' ) : $vars[ $field_name ];
+				$result[ $id ] = empty( $vars[ $field_name ] ) ? '#' . $id . __( ' (no title)',
+						'fw' ) : $vars[ $field_name ];
 			} else {
 				$result[ $id ] = $prefix . '_' . $sub_type . '_' . $id; // fixme
 			}
@@ -688,7 +701,9 @@ class _FW_Extension_Sidebars_Backend {
 					$preset['position'] = isset( $settings['position'] ) ? $settings['position'] : null;
 					$preset['preset']   = isset( $settings['preset'] ) ? $settings['preset'] : null;
 
-					if ( ! isset( $preset['preset'] ) or ! preg_match( '/^\d+$/', $preset['preset'] ) or ! in_array( $preset['preset'], $saved_settings ) ) {
+					if ( ! isset( $preset['preset'] ) or ! preg_match( '/^\d+$/',
+							$preset['preset'] ) or ! in_array( $preset['preset'], $saved_settings )
+					) {
 						$preset['preset'] = $new_key_preset;
 					}
 
@@ -700,7 +715,8 @@ class _FW_Extension_Sidebars_Backend {
 					if ( $result['status'] ) {
 						$singular_label   = $this->config->get_label_singular( $preset['type'], $preset['sub_type'] );
 						$prefix           = $this->config->get_prefix_by_type( $preset['type'] );
-						$page_names       = reset( $singular_label ) . ' - ' . implode( ', ', $this->build_preset_ids_list( $prefix, $preset['ids'], $preset['sub_type'] ) );
+						$page_names       = reset( $singular_label ) . ' - ' . implode( ', ',
+								$this->build_preset_ids_list( $prefix, $preset['ids'], $preset['sub_type'] ) );
 						$result['preset'] = $preset_id;
 						$result['label']  = ( isset( $result['label'] ) ? $result['label'] : '' ) . $page_names . ' ';
 					}
@@ -795,7 +811,10 @@ class _FW_Extension_Sidebars_Backend {
 			$exception    = new _FW_Extension_Sidebars_MissingSidebar_Exception( $exceptionMsg );
 			$all_sidebars = $this->get_all_sidebars();
 			foreach ( $preset['sidebars'] as $replaced_sidebar => $sidebar_id ) {
-				if ( empty( $sidebar_id ) or ! in_array( $sidebar_id, array_keys( $all_sidebars ) ) or ! in_array( $replaced_sidebar, fw()->extensions->get( 'sidebars' )->get_allowed_places() ) ) {
+				if ( empty( $sidebar_id ) or ! in_array( $sidebar_id,
+						array_keys( $all_sidebars ) ) or ! in_array( $replaced_sidebar,
+						fw()->extensions->get( 'sidebars' )->get_allowed_places() )
+				) {
 					unset( $preset['sidebars'][ $replaced_sidebar ] );
 
 					$exception->add_color( $replaced_sidebar );

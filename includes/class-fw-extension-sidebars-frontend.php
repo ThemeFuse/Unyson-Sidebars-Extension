@@ -120,7 +120,18 @@ class _FW_Extension_Sidebars_Frontend
 			return $result;
 		}
 
-		if (is_singular() || is_home() ){
+		//static page which show blog posts
+		if (is_home() && get_option('page_for_posts') != '0' && get_option('show_on_front') == 'page') {
+			$data['type']     = $this->config->get_type_by_prefix(_FW_Extension_Sidebars_Config::POST_TYPES_PREFIX);
+			$data['sub_type'] = 'page';
+			$data['id']       = get_queried_object_id();
+
+			$result = $this->get_preset_sidebars($data);
+			if ( $result )
+				return $result;
+		}
+
+		if (is_singular()){
 			$data['type']     = $this->config->get_type_by_prefix(_FW_Extension_Sidebars_Config::POST_TYPES_PREFIX);
 			$data['sub_type'] = get_post_type();
 			$data['id']       = get_the_id();

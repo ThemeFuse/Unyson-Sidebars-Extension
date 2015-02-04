@@ -458,3 +458,31 @@ div.wrap br.clear {
 	padding: 15px;
 }
 /* end: (i) tips */
+
+div.widget-liquid-left {
+	margin: 0;
+	width: 50%;
+	float: left;
+	padding: 0 15px 0;
+	box-sizing: border-box;
+}
+
+div.widget-liquid-right {
+	float: left;
+	width: 50%;
+	padding: 0 15px 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.wrap {
+	margin: 10px 20px 0 2px;
+}
+
+.fw-ext-sidebars-wrap-container {
+	float: left;
+	width: 50%;
+	padding: 0 15px 0;
+	box-sizing: border-box;
+}
+

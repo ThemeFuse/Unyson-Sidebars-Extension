@@ -274,6 +274,6 @@ class FW_Extension_Sidebars extends FW_Extension
 	 */
 	public function _get_link()
 	{
-		return 'widgets.php';
+		return self_admin_url('widgets.php');
 	}
 }

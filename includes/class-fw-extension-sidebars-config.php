@@ -31,10 +31,10 @@ class _FW_Extension_Sidebars_Config
 	'front_page_slug'  => array(
 		'order_option'  => 1, - optional: default 1 position in the other lists
 		'check_priority' => 'last' // type string  'first' | 'last', - optional: defaults 'last'
-		'name'                  => 'Pages with Front-Page template',
-		'conditional_tag'		=> array(
-			'callback'				=> 'is_page_template',
-			'params'                => array('page-templates/front-page.php')
+		'name' => 'Pages with Front-Page template',
+		'conditional_tag' => array(
+			'callback' => 'is_page_template',
+			'params' => array('page-templates/front-page.php')
 		)
 	),*/
 	private function get_config_defaults() {

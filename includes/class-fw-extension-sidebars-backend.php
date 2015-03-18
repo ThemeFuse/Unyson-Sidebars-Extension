@@ -276,10 +276,10 @@ class _FW_Extension_Sidebars_Backend {
 				'status'  => false,
 				'message' => __( "The placeholder can't be deleted because it is used in one of sidebars below.",
 						'fw' ) .
-				             "<br/><br/><b>" .
-				             __( 'Please replace it first so that you will not have visual gaps in your layout.',
-					             'fw' ) .
-				             "<b/>"
+							 "<br/><br/><b>" .
+							 __( 'Please replace it first so that you will not have visual gaps in your layout.',
+								 'fw' ) .
+							 "<b/>"
 			);
 		}
 

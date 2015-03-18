@@ -467,6 +467,36 @@ class _FW_Extension_Sidebars_Backend {
 		return true;
 	}
 
+	public function get_specific_preset_by_id($id){
+		$result = array();
+
+		$settings = $this->get_db();
+
+		if ( ! isset( $settings['settings'] ) ) {
+			return $result;
+		}
+
+		$type = 'post_types';
+		$subtype = get_post_type($id);
+		$presets = fw_akg('settings/'.$type.'/'.$subtype, $settings);
+
+		if(in_array($id, $presets['saved_ids'])){
+			foreach($presets['by_ids'] as  $key=>$preset){
+				if(in_array($id, $preset['ids'])){
+					$result[] = array_merge(
+						array(
+						'preset_id' => $key,
+						),
+						$preset
+						);
+				}
+			}
+		}
+
+		usort($result, array($this, 'preset_timestamp_cmp'));
+		$reverted = array_reverse($result);
+		return (array) array_pop($reverted);
+	}
 	/**
 	 * GET presets settings for Created Tab
 	 */

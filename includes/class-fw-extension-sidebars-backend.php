@@ -276,10 +276,10 @@ class _FW_Extension_Sidebars_Backend {
 				'status'  => false,
 				'message' => __( "The placeholder can't be deleted because it is used in one of sidebars below.",
 						'fw' ) .
-							 "<br/><br/><b>" .
-							 __( 'Please replace it first so that you will not have visual gaps in your layout.',
-								 'fw' ) .
-							 "<b/>"
+				             "<br/><br/><b>" .
+				             __( 'Please replace it first so that you will not have visual gaps in your layout.',
+					             'fw' ) .
+				             "<b/>"
 			);
 		}
 
@@ -467,36 +467,35 @@ class _FW_Extension_Sidebars_Backend {
 		return true;
 	}
 
-	public function get_specific_preset_by_id($id){
+	public function get_specific_preset_by_id( $id ) {
 		$result = array();
 
 		$settings = $this->get_db();
+		$type     = 'post_types';
+		$subtype  = get_post_type( $id );
+		$presets  = fw_akg( 'settings/' . $type . '/' . $subtype, $settings );
 
-		if ( ! isset( $settings['settings'] ) ) {
-			return $result;
-		}
+		if ( ! is_null( $presets ) ) {
 
-		$type = 'post_types';
-		$subtype = get_post_type($id);
-		$presets = fw_akg('settings/'.$type.'/'.$subtype, $settings);
-
-		if(in_array($id, $presets['saved_ids'])){
-			foreach($presets['by_ids'] as  $key=>$preset){
-				if(in_array($id, $preset['ids'])){
-					$result[] = array_merge(
-						array(
-						'preset_id' => $key,
-						),
-						$preset
+			if ( in_array( $id, $presets['saved_ids'] ) ) {
+				foreach ( $presets['by_ids'] as $key => $preset ) {
+					if ( in_array( $id, $preset['ids'] ) ) {
+						$result[] = array_merge(
+							array(
+								'preset_id' => $key,
+							),
+							$preset
 						);
+					}
 				}
 			}
+			usort( $result, array( $this, 'preset_timestamp_cmp' ) );
+			$result = (array) array_pop( $result );
 		}
 
-		usort($result, array($this, 'preset_timestamp_cmp'));
-		$reverted = array_reverse($result);
-		return (array) array_pop($reverted);
+		return $result;
 	}
+
 	/**
 	 * GET presets settings for Created Tab
 	 */

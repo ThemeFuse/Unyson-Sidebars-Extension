@@ -88,22 +88,25 @@ class FW_Extension_Sidebars extends FW_Extension {
 		}
 	}
 
-	public function _admin_filter_render_sidebar_picker() {
-		return array(
-			'sidebar-picker' => array(
-				'title'   => false,
-				'type'    => 'box',
-				'context' => 'side',
-				'options' => array(
-					'sidebar' => array(
-						'type'           => 'sidebar-picker',
-						'label'          => false,
-						'option_handler' => new FW_Sidebar_Picker_Option_Handler(),
+	public function _admin_filter_render_sidebar_picker($options) {
+		// fixme: What about post-type check? Is this option needed in every post-type?
 
-					)
-				),
+		$options['sidebar-picker'] = array(
+			'title'   => false,
+			'type'    => 'box',
+			'context' => 'side',
+			'options' => array(
+				'sidebar' => array(
+					'type'           => 'sidebar-picker',
+					'label'          => false,
+
+					// fixme: for performance reasons, maybe specify class name instead of creating instance every time?
+					'option_handler' => new FW_Sidebar_Picker_Option_Handler(),
+				)
 			),
 		);
+
+		return $options;
 	}
 
 	/**

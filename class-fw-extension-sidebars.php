@@ -89,6 +89,7 @@ class FW_Extension_Sidebars extends FW_Extension {
 	}
 
 	public function _admin_filter_render_sidebar_picker($options) {
+
 		if($this->get_config('show_in_post_types') === true) {
 			return array_merge($options, array(
 				'sidebar-picker' => array(

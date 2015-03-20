@@ -475,8 +475,7 @@ class _FW_Extension_Sidebars_Backend {
 		$subtype  = get_post_type( $id );
 		$presets  = fw_akg( 'settings/' . $type . '/' . $subtype, $settings );
 
-		if ( ! is_null( $presets ) ) {
-
+		if ( ! is_null( $presets ) && ! empty( $presets['saved_ids'] ) ) {
 			if ( in_array( $id, $presets['saved_ids'] ) ) {
 				foreach ( $presets['by_ids'] as $key => $preset ) {
 					if ( in_array( $id, $preset['ids'] ) ) {

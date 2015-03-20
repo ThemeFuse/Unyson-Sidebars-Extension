@@ -32,4 +32,6 @@ $cfg['dynamic_sidebar_args'] = array(
 	'before_title'  => '<h1 class="widget-title">',
 	'after_title'   => '</h1>',
 );
+
+$cfg['show_in_post_types'] = false;
 */

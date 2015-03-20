@@ -88,22 +88,26 @@ class FW_Extension_Sidebars extends FW_Extension {
 		}
 	}
 
-	public function _admin_filter_render_sidebar_picker() {
-		return array(
-			'sidebar-picker' => array(
-				'title'   => false,
-				'type'    => 'box',
-				'context' => 'side',
-				'options' => array(
-					'sidebar' => array(
-						'type'           => 'sidebar-picker',
-						'label'          => false,
-						'option_handler' => new FW_Sidebar_Picker_Option_Handler(),
+	public function _admin_filter_render_sidebar_picker($options) {
+		if($this->get_config('show_in_post_types') === true) {
+			return array_merge($options, array(
+				'sidebar-picker' => array(
+					'title'   => false,
+					'type'    => 'box',
+					'context' => 'side',
+					'options' => array(
+						'sidebar' => array(
+							'type'           => 'sidebar-picker',
+							'label'          => false,
+							'option_handler' => new FW_Sidebar_Picker_Option_Handler(),
 
-					)
+						)
+					),
 				),
-			),
-		);
+			));
+		}
+
+		return $options;
 	}
 
 	/**

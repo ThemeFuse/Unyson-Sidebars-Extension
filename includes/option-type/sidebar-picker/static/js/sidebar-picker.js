@@ -20,7 +20,9 @@
 		}
 
 		//first run.
-		methods.showSidebarsLocation(elements.$image_picker.find('option:selected').data('extraData').colors);
+		if (elements.$image_picker.length) {
+			methods.showSidebarsLocation(elements.$image_picker.find('option:selected').data('extraData').colors);
+		}
 	};
 
 	fwe.on('fw:options:init', function (data) {

@@ -10,6 +10,6 @@ class FW_Sidebar_Picker_Option_Handler implements FW_Option_Handler {
 
 	function save_option_value( $option_id, $option, $value, $data = array() ) {
 		$settings = FW_Request::POST( 'fw_options/' . $option_id );
-		fw_print( fw_ext( 'sidebars' )->save_sidebar_settings( $settings ) );
+		fw_ext( 'sidebars' )->save_sidebar_settings( $settings );
 	}
 }

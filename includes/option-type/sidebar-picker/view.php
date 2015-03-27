@@ -1,10 +1,11 @@
 <?php if ( ! defined( 'FW' ) ) {
 	die( 'Forbidden' );
-} ?>
-<?php
+}
+
 $attr['class'] .= ' fw-ext-sidebars-wrap ';
 unset( $attr['name'] );
 ?>
+
 <div <?php echo fw_attr_to_html( $attr ); ?>>
 	<?php echo fw()->backend->option_type( 'hidden' )->render( 'slug',
 		array(

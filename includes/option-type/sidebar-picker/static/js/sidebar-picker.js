@@ -8,7 +8,6 @@
 
 		$this.on('fw:option-type:image-picker:clicked', function (e, data) {
 			methods.showSidebarsLocation(data.data.colors);
-
 		});
 
 		methods = {

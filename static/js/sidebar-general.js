@@ -712,7 +712,6 @@ var fwSidebars;
 		selectizeInit: function () {
 			fwEvents.on('fw:sidebars:create:sidebar:success', function (data) {
 				$('select.sidebar-selectize').each(function () {
-					console.log($(this));
 					$(this).data('selectize').addOption({value: data.sidebar.id, text: data.sidebar.name});
 				});
 
@@ -784,7 +783,6 @@ var fwSidebars;
 					var $option = null;
 					var options = this.options;
 
-					console.log(options);
 					for (var i in options) {
 						if (options.hasOwnProperty(i)) {
 							$option = options[i];

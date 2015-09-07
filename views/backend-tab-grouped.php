@@ -3,7 +3,7 @@
 
 	<div class="fw-ext-sidebars-option-label fw-backend-option-grouped-pages-wrap fw-col-sm-4 fw-col-md-3 fw-col-lg-2">
 		<div class="fw-inner">
-			<label for="fw-option-sidebars-for-<?php echo $id ?>"><?php _e('For group','fw') ?></label>
+			<label for="fw-option-sidebars-for-<?php echo esc_attr($id) ?>"><?php _e('For group','fw') ?></label>
 			<div class="fw-clear"></div>
 		</div>
 	</div>

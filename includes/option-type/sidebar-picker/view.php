@@ -34,10 +34,10 @@ unset( $attr['name'] );
 	) ?>
 	<?php if ( ! empty( $data_positions_options ) ): ?>
 		<!--MODE INSERT START-->
-		<div class="fw-row fw-ext-sidebars-image-picker-box-<?php echo $id ?>">
+		<div class="fw-row fw-ext-sidebars-image-picker-box-<?php echo esc_attr($id) ?>">
 			<div class="fw-ext-sidebars-option-label fw-col-sm-4 fw-col-md-3 fw-col-lg-2">
 				<div class="fw-inner">
-					<label for="fw-select-sidebar-for-<?php echo $id ?>"><?php _e( 'Sidebar', 'fw' ) ?></label>
+					<label for="fw-select-sidebar-for-<?php echo esc_attr($id) ?>"><?php _e( 'Sidebar', 'fw' ) ?></label>
 
 					<div class="fw-clear"></div>
 				</div>
@@ -65,8 +65,8 @@ unset( $attr['name'] );
 		<div
 			class="placeholders fw-insert-mode fw-col-sm-8 fw-col-sm-offset-4 fw-col-md-9 fw-col-md-offset-3 fw-col-lg-10 fw-col-lg-offset-2">
 			<?php foreach ( $colors as $color ) : ?>
-				<div class="fw-ext-sidebars-location empty <?php echo $id ?> <?php echo $color; ?>"
-				     data-color="<?php echo $color; ?>">
+				<div class="fw-ext-sidebars-location empty <?php echo esc_attr($id) ?> <?php echo esc_attr($color); ?>"
+				     data-color="<?php echo esc_attr($color); ?>">
 					<?php echo fw()->backend->option_type( 'select' )->render(
 						$color,
 						$image_picker,
@@ -88,7 +88,7 @@ unset( $attr['name'] );
 		<div class="placeholders fw-replace-mode fw-row">
 			<div class="fw-ext-sidebars-option-label fw-col-sm-4 fw-col-md-3 fw-col-lg-2">
 				<div class="fw-inner">
-					<label for="fw-select-sidebar-for-<?php echo $id ?>"><?php _e( 'Sidebar', 'fw' ) ?></label>
+					<label for="fw-select-sidebar-for-<?php echo esc_attr($id) ?>"><?php _e( 'Sidebar', 'fw' ) ?></label>
 
 					<div class="fw-clear"></div>
 				</div>
@@ -97,8 +97,8 @@ unset( $attr['name'] );
 
 			<div class="fw-col-sm-8 fw-col-md-9 fw-col-lg-10">
 				<?php foreach ( $colors as $sidebar_id => $color ) : ?>
-					<div class="fw-ext-sidebars-location <?php echo $id ?> <?php echo $color; ?>"
-					     data-color="<?php echo $color; ?>">
+					<div class="fw-ext-sidebars-location <?php echo esc_attr($id) ?> <?php echo esc_attr($color); ?>"
+					     data-color="<?php echo esc_attr($color); ?>">
 						<?php $short_sidebar_name = strlen( $sidebars[ $sidebar_id ]->get_name() ) > 20 ? mb_substr( $sidebars[ $sidebar_id ]->get_name(), 0, 20 ) . '...' : $sidebars[ $sidebar_id ]->get_name(); ?>
 						<small
 							class="fw-ext-sidebars-placeholder-title"><?php echo __( sprintf( 'Replace %s with:', $short_sidebar_name ), 'fw' ) ?></small>

@@ -305,7 +305,7 @@ class FW_Extension_Sidebars extends FW_Extension {
 		return $this->get_frontend_instance()->get_current_page_preset();
 	}
 
-	public function get_current_positon() {
+	public function get_current_position() {
 		return $this->get_frontend_instance()->get_preset_position();
 	}
 

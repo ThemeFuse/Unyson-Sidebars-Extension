@@ -305,8 +305,20 @@ class FW_Extension_Sidebars extends FW_Extension {
 		return $this->get_frontend_instance()->get_current_page_preset();
 	}
 
+	/**
+	 * @since 1.0.6
+	 */
 	public function get_current_position() {
 		return $this->get_frontend_instance()->get_preset_position();
+	}
+
+	/**
+	 * Old method with typo in name.
+	 * We didn't deleted it because there may be someone that is calling it (because it is public)
+	 * @deprecated
+	 */
+	public function get_current_positon() {
+		return $this->get_current_position();
 	}
 
 	/**

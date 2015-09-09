@@ -16,7 +16,7 @@ function fw_ext_sidebars_show($color)
  */
 function fw_ext_sidebars_get_current_position()
 {
-	return fw()->extensions->get('sidebars')->get_current_positon();
+	return fw()->extensions->get('sidebars')->get_current_position();
 }
 
 /**

@@ -251,7 +251,7 @@ class _FW_Extension_Sidebars_Backend {
 
 		$db['sidebars'][ $sidebar->get_id() ] = $sidebar->to_array( $save_sidebar_fields );
 
-		$result['status'] = update_option( $this->wp_option_sidebar_settings, array_filter( $db ) );
+		$result['status'] = update_option( $this->wp_option_sidebar_settings, array_filter( $db ), false );
 		if ( $result['status'] ) {
 			$result['sidebar'] = $sidebar->to_array( $save_sidebar_fields );
 		}
@@ -285,7 +285,7 @@ class _FW_Extension_Sidebars_Backend {
 
 		fw_aku( 'sidebars/' . $sidebar_id, $db );
 
-		update_option( $this->wp_option_sidebar_settings, array_filter( $db ) );
+		update_option( $this->wp_option_sidebar_settings, array_filter( $db ), false );
 
 		$sidebar_obj = new _FW_Extension_Sidebars_Model_Sidebar( array( 'id' => $sidebar_id ) );
 		$sidebar_obj->remove_widgets();
@@ -393,7 +393,7 @@ class _FW_Extension_Sidebars_Backend {
 			$this->clean_unused_arrays( $db, $db_key['type'], $db_key['sub_type'] );
 		}
 
-		return update_option( $this->wp_option_sidebar_settings, $db );
+		return update_option( $this->wp_option_sidebar_settings, $db, false );
 	}
 
 	/**
@@ -412,7 +412,7 @@ class _FW_Extension_Sidebars_Backend {
 		unset( $db['settings'][ $type ][ $sub_type ]['common'] );
 		$this->clean_unused_arrays( $db, $type, $sub_type );
 
-		return update_option( $this->wp_option_sidebar_settings, $db );
+		return update_option( $this->wp_option_sidebar_settings, $db, false );
 	}
 
 	protected function clean_unused_arrays( &$db, $type, $sub_type ) {
@@ -651,7 +651,7 @@ class _FW_Extension_Sidebars_Backend {
 			}
 		}
 
-		update_option( $this->wp_option_sidebar_settings, $db );
+		update_option( $this->wp_option_sidebar_settings, $db, false );
 
 		return true;
 	}
@@ -678,7 +678,7 @@ class _FW_Extension_Sidebars_Backend {
 			}
 		}
 
-		update_option( $this->wp_option_sidebar_settings, $db );
+		update_option( $this->wp_option_sidebar_settings, $db, false );
 
 		return true;
 	}
@@ -831,7 +831,7 @@ class _FW_Extension_Sidebars_Backend {
 	private function _fw_update_adapter( $allowed_places ) {
 		$db = $this->get_db();
 		fw_aks( 'allowed_places', $allowed_places, $db );
-		update_option( $this->wp_option_sidebar_settings, $db );
+		update_option( $this->wp_option_sidebar_settings, $db, false );
 	}
 
 	private function _fw_check_allowed_replace_positions( &$preset ) {

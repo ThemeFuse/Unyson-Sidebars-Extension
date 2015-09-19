@@ -192,10 +192,10 @@ class _FW_Extension_Sidebars_Model_Sidebar
 					unset($db[$widget_id]);
 				}
 
-				update_option($this->wp_widget_prefix_option . $widget_slug, $db);
+				update_option($this->wp_widget_prefix_option . $widget_slug, $db, false);
 			}
 		}
 		unset($widgets[$this->id]);
-		update_option($this->wp_sidebars_widgets_option, $widgets);
+		update_option($this->wp_sidebars_widgets_option, $widgets, false);
 	}
 }

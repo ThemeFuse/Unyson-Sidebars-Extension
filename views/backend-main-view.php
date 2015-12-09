@@ -1,12 +1,20 @@
-<?php if (!defined('FW')) die('Forbidden'); ?>
+<?php if (!defined('FW')) die('Forbidden');
+	global $wp_version;
+?>
 <?php $cnt_created_sidebars = count($created_sidebars); ?>
 <?php if ( fw()->extensions->get( 'sidebars' )->is_missing_config() or (false === fw()->extensions->get( 'sidebars' )->is_missing_config() and !empty($data_positions_options['choices'])) or $cnt_created_sidebars)  : ?>
 <div class="fw-ext-sidebars-wrap-container">
 	<div class="fw-ext-sidebars-wrap">
 
+		<?php if (version_compare($wp_version, '4.4', '>=')): ?>
+		<h2 class="hndle">
+			<span><?php _e('Manage Sidebars', 'fw');?></span>
+		</h2>
+		<?php else: ?>
 		<h3 class="hndle">
 			<span><?php _e('Manage Sidebars', 'fw');?></span>
 		</h3>
+		<?php endif; ?>
 		<div class="fw-ext-sidebars-desc"><?php _e('Use this section to create and/or set different sidebar(s) for different page(s)','fw')?></div>
 
 		<div class="fw-sidebars-tabs-wrapper" style="opacity: 0;" >

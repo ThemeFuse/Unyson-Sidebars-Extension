@@ -257,14 +257,6 @@ div.wrap br.clear {
 	text-decoration: none;
 	color: #555;
 	border-bottom: 1px solid #CCC;
-	margin-bottom: -1px; /* @since WP 4.4 */
-}
-
-body.branch-4-0 .fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul li a.nav-tab,
-body.branch-4-1 .fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul li a.nav-tab,
-body.branch-4-2 .fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul li a.nav-tab,
-body.branch-4-3 .fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul li a.nav-tab {
-	margin-bottom: 0;
 }
 
 .fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul li {

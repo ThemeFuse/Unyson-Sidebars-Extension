@@ -93,7 +93,7 @@ class FW_Extension_Sidebars extends FW_Extension {
 		if($this->get_config('show_in_post_types') === true) {
 			return array_merge($options, array(
 				'sidebar-picker' => array(
-					'title'   => false,
+					'title'   => __('Sidebar Picker', 'fw'),
 					'type'    => 'box',
 					'context' => 'side',
 					'options' => array(

@@ -259,33 +259,24 @@ div.wrap br.clear {
 	border-bottom: 1px solid #CCC;
 }
 
+.fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul {
+	margin: 0;
+}
+
+.fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul:after {
+	display: block;
+	content: '';
+	clear: both;
+}
+
 .fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul li {
 	float: left;
-	margin-left: 10px;
-	margin-bottom: 0;
+	/*margin-left: 10px;*/
+	margin-bottom: -1px;
 }
 
 .fw-ext-sidebars-wrap .fw-sidebars-tabs-list {
 	border-bottom: 1px solid #CCC;
-}
-
-@media (max-width: 1000px) {
-	.fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul {
-		margin-bottom: 0;
-	}
-	.fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul li {
-		float: none;
-		max-width: 200px;
-	}
-
-	.fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul li a {
-		display: block;
-	}
-
-	.fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul li a.nav-tab {
-		margin: 0 5px;
-		border-bottom: none;
-	}
 }
 
 .fw-ext-sidebars-wrap .fw-backend-sidebars-list {
@@ -486,3 +477,33 @@ div.widget-liquid-right {
 	box-sizing: border-box;
 }
 
+@media (max-width: 1250px) {
+	.fw-ext-sidebars-wrap .fw-sidebars-tabs-list {
+		border-bottom: none;
+	}
+
+	.fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul li {
+		width: 100%;
+		float: none;
+		margin-bottom: 10px;
+	}
+
+	.fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul li:last-child {
+		margin-bottom: 0;
+	}
+
+	.fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul li.ui-state-active a.nav-tab {
+		border-bottom-color: #ccc;
+	}
+
+	.fw-ext-sidebars-wrap .fw-sidebars-tabs-list ul li a.nav-tab {
+		float: none;
+		display: block;
+		overflow: hidden;
+		margin-left: 0;
+	}
+
+	.fw-ext-sidebars-wrap .fw-ext-sidebars-box-holder {
+		margin-left: 0;
+	}
+}

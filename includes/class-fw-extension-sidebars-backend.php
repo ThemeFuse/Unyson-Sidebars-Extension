@@ -824,7 +824,24 @@ class _FW_Extension_Sidebars_Backend {
 			return $result;
 		}
 
-		return _FW_Extension_Sidebars_Config::$allowed_colors;
+		$positions = $this->config->get_sidebar_positions();
+		$colors = _FW_Extension_Sidebars_Config::$allowed_colors;
+		
+		$max = 1;
+		if( count( $positions ) && is_array( $positions ) ) {
+			foreach( $positions as $key => $sidebar ) {
+				$count = fw_akg( _FW_Extension_Sidebars_Config::SIDEBARS_NR_KEY, $sidebar );
+				if( $count > $max ) {
+					$max = $count;
+				}
+			}
+		}
+		
+		if( $max > count( $colors ) ) {
+			return $colors;
+		} else {
+			return array_slice( $colors, 0, $max );
+		}
 	}
 
 

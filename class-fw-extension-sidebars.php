@@ -70,7 +70,7 @@ class FW_Extension_Sidebars extends FW_Extension {
 		add_action( 'admin_enqueue_scripts', array( $this, '_admin_action_enqueue_scripts' ) );
 		add_action( 'sidebar_admin_page', array( $this, '_admin_action_render_partial' ) );
 
-		add_filter( 'fw_post_options', array( $this, '_admin_filter_render_sidebar_picker' ) );
+		add_filter( 'fw_post_options', array( $this, '_admin_filter_render_sidebar_picker' ), 10, 2 );
 
 		if ( current_user_can( 'edit_theme_options' ) ) {
 			add_action( 'wp_ajax_add_new_sidebar_ajax', array( $this, '_admin_action_add_new_sidebar_ajax' ) );
@@ -88,9 +88,14 @@ class FW_Extension_Sidebars extends FW_Extension {
 		}
 	}
 
-	public function _admin_filter_render_sidebar_picker($options) {
+	public function _admin_filter_render_sidebar_picker($options, $post_type) {
 
+		$post_type_array = $this->get_config('post_types_support');
+		
 		if($this->get_config('show_in_post_types') === true) {
+			if( !empty($post_type_array) && !in_array($post_type, $post_type_array) ) {
+				return $options;
+			}
 			return array_merge($options, array(
 				'sidebar-picker' => array(
 					'title'   => __('Sidebar Picker', 'fw'),

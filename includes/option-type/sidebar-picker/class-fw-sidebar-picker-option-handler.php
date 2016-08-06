@@ -10,6 +10,14 @@ class FW_Sidebar_Picker_Option_Handler implements FW_Option_Handler {
 
 	function save_option_value( $option_id, $option, $value, $data = array() ) {
 		$settings = FW_Request::POST( 'fw_options/' . $option_id );
-		fw_ext( 'sidebars' )->save_sidebar_settings( $settings );
+		if( $settings['position'] === 'default' ) {
+			$args = array(
+				'slug' => false,
+				'preset' => $settings['preset']
+			);
+			fw_ext( 'sidebars' )->delete_sidebar_preset( $args );
+		} else {
+			fw_ext( 'sidebars' )->save_sidebar_settings( $settings );
+		}
 	}
 }

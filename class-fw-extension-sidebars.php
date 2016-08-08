@@ -44,6 +44,10 @@ class FW_Extension_Sidebars extends FW_Extension {
 		return $this->backend->save_sidebar_settings( $settings );
 	}
 
+	public function delete_sidebar_preset( $args ) {
+		return $this->backend->remove_preset( $args );
+	}
+
 	/**
 	 * @internal
 	 */

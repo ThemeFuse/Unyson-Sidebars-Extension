@@ -44,6 +44,19 @@ class FW_Option_Type_Sidebar_Picker extends FW_Option_Type {
 
 		$data_positions_options = fw_ext( 'sidebars' )->is_missing_config() ? array() : fw_ext( 'sidebars' )->get_data_positions_options();
 
+		$data_positions_options['choices'] = array_merge(
+			array(
+				'default' => array(
+					'label' => false,
+					'small' => fw()->extensions->get('sidebars')->locate_URI('/includes/option-type/sidebar-picker/static/images/default.png'),
+					'data' => array(
+						'colors' => 0,
+					),
+				),
+			),
+			$data_positions_options['choices']
+		);
+
 		return fw_render_view( fw_ext( 'sidebars' )->get_declared_path( '/includes/option-type/sidebar-picker/view.php' ), array(
 			'data_positions_options' => $data_positions_options,
 			'id'                     => $id,

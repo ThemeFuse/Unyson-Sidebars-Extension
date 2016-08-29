@@ -28,6 +28,8 @@ class FW_Option_Type_Sidebar_Picker extends FW_Option_Type {
 			fw()->manifest->get_version(),
 			true
 		);
+
+		fw()->backend->option_type('image-picker')->enqueue_static();
 	}
 
 	/**

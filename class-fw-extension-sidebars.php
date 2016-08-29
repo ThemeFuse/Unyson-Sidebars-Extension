@@ -66,6 +66,15 @@ class FW_Extension_Sidebars extends FW_Extension {
 		} else {
 			$this->add_theme_actions();
 		}
+
+		add_action('fw_option_types_init', array($this, '_action_option_types_init'));
+	}
+
+	public function _action_option_types_init() {
+		$dir = dirname(__FILE__);
+
+		require $dir .'/includes/option-type/sidebar-picker/class-fw-option-type-sidebar-picker.php';
+		require $dir .'/includes/option-type/sidebar-picker/class-fw-sidebar-picker-option-handler.php';
 	}
 
 	private function add_theme_actions() {

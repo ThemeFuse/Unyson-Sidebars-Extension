@@ -17,6 +17,10 @@ class FW_Option_Storage_Type_FW_Ext_Sidebar_Picker extends FW_Option_Storage_Typ
 	{
 		$ext = fw_ext( 'sidebars' ); /** @var FW_Extension_Sidebars $ext */
 
+		if (empty($value)) {
+			return $value;
+		}
+
 		if ( $value['position'] === 'default' ) {
 			$ext->delete_sidebar_preset( array(
 				'slug' => false,

@@ -101,7 +101,7 @@ class FW_Option_Type_Sidebar_Picker extends FW_Option_Type {
 	 */
 	protected function _get_defaults() {
 		return array(
-			'value' => ''
+			'value' => array(),
 		);
 	}
 

@@ -68,13 +68,16 @@ class FW_Extension_Sidebars extends FW_Extension {
 		}
 
 		add_action('fw_option_types_init', array($this, '_action_option_types_init'));
+		add_action('fw:option-storage-types:register', array($this, '_action_register_option_storage_types'));
 	}
 
 	public function _action_option_types_init() {
-		$dir = dirname(__FILE__);
+		require_once dirname(__FILE__) .'/includes/option-type/sidebar-picker/class-fw-option-type-sidebar-picker.php';
+	}
 
-		require $dir .'/includes/option-type/sidebar-picker/class-fw-option-type-sidebar-picker.php';
-		require $dir .'/includes/option-type/sidebar-picker/class-fw-sidebar-picker-option-handler.php';
+	public function _action_register_option_storage_types(_FW_Option_Storage_Type_Register $register) {
+		require_once dirname(__FILE__) .'/includes/option-storage-type/class-fw-option-storage-type-fw-ext-sidebar-picker.php';
+		$register->register(new FW_Option_Storage_Type_FW_Ext_Sidebar_Picker());
 	}
 
 	private function add_theme_actions() {
@@ -92,28 +95,22 @@ class FW_Extension_Sidebars extends FW_Extension {
 
 		if ( current_user_can( 'edit_theme_options' ) ) {
 			add_action( 'wp_ajax_add_new_sidebar_ajax', array( $this, '_admin_action_add_new_sidebar_ajax' ) );
-			add_action( 'wp_ajax_sidebar_autocomplete_ajax', array(
-				$this,
-				'_admin_action_sidebar_autocomplete_ajax'
-			) );
+			add_action( 'wp_ajax_sidebar_autocomplete_ajax', array($this, '_admin_action_sidebar_autocomplete_ajax') );
 			add_action( 'wp_ajax_save_sidebar_preset_ajax', array( $this, '_admin_action_save_sidebar_preset_ajax' ) );
-			add_action( 'wp_ajax_remove_sidebar_preset_ajax', array(
-				$this,
-				'_admin_action_remove_sidebar_preset_ajax'
-			) );
+			add_action( 'wp_ajax_remove_sidebar_preset_ajax', array($this, '_admin_action_remove_sidebar_preset_ajax') );
 			add_action( 'wp_ajax_delete_sidebar_ajax', array( $this, '_admin_action_delete_sidebar_ajax' ) );
 			add_action( 'wp_ajax_load_sidebar_preset_ajax', array( $this, '_admin_action_load_sidebar_preset_ajax' ) );
 		}
 	}
 
 	public function _admin_filter_render_sidebar_picker($options, $post_type) {
-
 		$post_type_array = $this->get_config('post_types_support');
-		
-		if($this->get_config('show_in_post_types') === true) {
-			if( !empty($post_type_array) && !in_array($post_type, $post_type_array) ) {
+
+		if ($this->get_config('show_in_post_types') === true) {
+			if ( ! empty($post_type_array) && ! in_array($post_type, $post_type_array) ) {
 				return $options;
 			}
+
 			return array_merge($options, array(
 				'sidebar-picker' => array(
 					'title'   => __('Sidebar Picker', 'fw'),
@@ -121,10 +118,9 @@ class FW_Extension_Sidebars extends FW_Extension {
 					'context' => 'side',
 					'options' => array(
 						'sidebar' => array(
-							'type'           => 'sidebar-picker',
-							'label'          => false,
-							'option_handler' => new FW_Sidebar_Picker_Option_Handler(),
-
+							'type'          => 'sidebar-picker',
+							'label'         => false,
+							'fw-storage'    => 'fw-ext-sidebar-picker',
 						)
 					),
 				),

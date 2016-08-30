@@ -702,7 +702,7 @@ class _FW_Extension_Sidebars_Backend {
 	 */
 	public function save_sidebar_settings( $settings ) {
 		try {
-			//Preset validate & saving for grouped pages tab
+			// Preset validate & saving for grouped pages tab
 			if ( isset( $settings['slug'] ) and $settings['slug'] ) {
 				$preset           = $this->validate_preset( $settings );
 				$result['status'] = $this->update_preset( $preset );
@@ -712,7 +712,7 @@ class _FW_Extension_Sidebars_Backend {
 					$result['slug']  = key( $grouped_label );
 				}
 			} else {
-				//Preset validate & saving for specific tab
+				// Preset validate & saving for specific tab
 				$new_key_preset = $this->generate_preset_id();
 				$slugs          = array();
 				$preset_id      = null;

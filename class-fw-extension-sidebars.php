@@ -61,6 +61,8 @@ class FW_Extension_Sidebars extends FW_Extension {
 
 		$this->backend->init_sidebars();
 
+		add_filter( 'fw_post_options', array( $this, '_admin_filter_render_sidebar_picker' ), 10, 2 );
+
 		if ( is_admin() ) {
 			$this->add_admin_actions();
 		} else {
@@ -90,8 +92,6 @@ class FW_Extension_Sidebars extends FW_Extension {
 	private function  add_admin_actions() {
 		add_action( 'admin_enqueue_scripts', array( $this, '_admin_action_enqueue_scripts' ) );
 		add_action( 'sidebar_admin_page', array( $this, '_admin_action_render_partial' ) );
-
-		add_filter( 'fw_post_options', array( $this, '_admin_filter_render_sidebar_picker' ), 10, 2 );
 
 		if ( current_user_can( 'edit_theme_options' ) ) {
 			add_action( 'wp_ajax_add_new_sidebar_ajax', array( $this, '_admin_action_add_new_sidebar_ajax' ) );

@@ -18,5 +18,9 @@ $manifest['requirements'] = array(
 		'min_version' => '2.2.2', // in this version was added option handler
 	)
 );
+$manifest['github_repo'] = 'https://github.com/ThemeFuse/Unyson-Sidebars-Extension';
+$manifest['uri'] = 'http://manual.unyson.io/en/latest/extension/sidebars/index.html#content';
+$manifest['author'] = 'ThemeFuse';
+$manifest['author_uri'] = 'http://themefuse.com/';
 
 $manifest['github_update'] = 'ThemeFuse/Unyson-Sidebars-Extension';

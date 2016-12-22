@@ -10,7 +10,7 @@ $manifest['description']  = __(
 	.' or different sidebars on different pages.',
 	'fw'
 );
-$manifest['version']      = '1.0.14';
+$manifest['version']      = '1.0.15';
 $manifest['display']      = true;
 $manifest['standalone']   = true;
 $manifest['requirements'] = array(

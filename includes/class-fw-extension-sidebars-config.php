@@ -11,6 +11,7 @@ class _FW_Extension_Sidebars_Config
 
 	const TAXONOMIES_PREFIX       = 'tx';
 	const POST_TYPES_PREFIX       = 'pt';
+	const ARCHIVES_PREFIX         = 'ar';
 	const CONDITIONAL_TAGS_PREFIX = 'ct';
 	const DEFAULT_PREFIX          = 'df';
 	const DEFAULT_SUB_TYPE        = 'all';
@@ -19,6 +20,7 @@ class _FW_Extension_Sidebars_Config
 
 	private static $config_keys = array(
 		self::POST_TYPES_PREFIX         => 'post_types',
+		self::ARCHIVES_PREFIX         	=> 'archives',
 		self::TAXONOMIES_PREFIX         => 'taxonomies',
 		self::CONDITIONAL_TAGS_PREFIX   => 'conditional_tags',
 		self::DEFAULT_PREFIX            => 'default'
@@ -64,7 +66,7 @@ class _FW_Extension_Sidebars_Config
 					)
 				),
 				'taxonomies' => array(
-					'post_tag'      => false,
+					'post_tag'      => true,
 					'post_format'   => false,
 					'nav_menu'      => false,
 					'link_category' => false,
@@ -101,11 +103,6 @@ class _FW_Extension_Sidebars_Config
 						'order_option'  => 1,
 						'check_priority' => 'last'
 					),
-					'is_archive'        => array(
-						'name'          => __('Archive Page','fw'),
-						'order_option'  => 5,
-						'check_priority' => 'last'
-					)
 				)
 			)
 		);
@@ -174,6 +171,21 @@ class _FW_Extension_Sidebars_Config
 				$result['taxonomies']['choices'] = array_merge(
 					$result['taxonomies']['choices'],
 					$this->get_label_grouped('taxonomies',$taxonomy)
+				);
+			}
+		}
+
+		{
+			$result['archives'] = array(
+				'attr'    => array('label' => __('Archives', 'fw')),
+				'choices' => array()
+			);
+
+			$post_types = $this->get_post_types();
+			foreach($post_types as $post_type) {
+				$result['archives']['choices'] = array_merge(
+					$result['archives']['choices'],
+					$this->get_label_grouped('archives',$post_type)
 				);
 			}
 		}
@@ -307,7 +319,7 @@ class _FW_Extension_Sidebars_Config
 		if ( $type === $this->get_type_by_prefix(self::DEFAULT_PREFIX) and $sub_type === self::DEFAULT_SUB_TYPE )
 			return array(self::DEFAULT_SLUG => __('All Pages', 'fw'));
 
-		if($type === 'post_types' or $type === 'taxonomies')
+		if($type === 'post_types' or $type === 'taxonomies' or $type === 'archives')
 			$default_label = $this->get_name_from_db($sub_type, $prefix, false);
 		else
 			$default_label = fw_akg('select_options/' . $type . '/' . $sub_type . '/name', $this->config, $type . '_' . $sub_type);
@@ -326,7 +338,8 @@ class _FW_Extension_Sidebars_Config
 	protected function get_name_from_db($slug, $type_key, $is_singular)
 	{
 		$result = $slug;
-		$get_object = ($type_key === self::POST_TYPES_PREFIX ? 'get_post_type_object' : 'get_taxonomy' );
+
+		$get_object = $type_key === self::POST_TYPES_PREFIX || $type_key === self::ARCHIVES_PREFIX ? 'get_post_type_object' : 'get_taxonomy';
 		$obj = call_user_func_array($get_object, array($slug));
 		if($obj) {
 			if($is_singular) {

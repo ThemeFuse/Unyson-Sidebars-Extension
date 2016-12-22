@@ -307,6 +307,7 @@ class _FW_Extension_Sidebars_Backend {
 
 		switch ( $search_type ) {
 			case 'post_types':
+			case 'archives':
 				$wp_query = new WP_Query( array(
 					'post_type'                       => $search_sub_type,
 					'fw_ext_sidebars_post_title_like' => $search_term,

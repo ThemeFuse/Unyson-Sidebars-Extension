@@ -103,6 +103,11 @@ class _FW_Extension_Sidebars_Config
 						'order_option'  => 1,
 						'check_priority' => 'last'
 					),
+					'is_archive'        => array(
+						'name'          => __('Archive Page','fw'),
+						'order_option'  => 5,
+						'check_priority' => 'last'
+					)
 				)
 			)
 		);
@@ -181,7 +186,11 @@ class _FW_Extension_Sidebars_Config
 				'choices' => array()
 			);
 
-			$post_types = $this->get_post_types();
+			$post_types = get_post_types(array(
+				'public' => true,
+				'has_archive' => true
+			));
+
 			foreach($post_types as $post_type) {
 				$result['archives']['choices'] = array_merge(
 					$result['archives']['choices'],

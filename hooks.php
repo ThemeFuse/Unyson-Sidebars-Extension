@@ -4,7 +4,7 @@
  * Add ability to WP_Query to find out posts by title for the sidebars auto-complete
  * @internal
  */
-function _filter_fw_ext_sidebars_title_like_posts_where( $where, &$wp_query ) {
+function _filter_fw_ext_sidebars_title_like_posts_where( $where, $wp_query ) {
 	/**
 	 * @var WPDB $wpdb
 	 */

@@ -181,6 +181,17 @@ class _FW_Extension_Sidebars_Frontend {
 			}
 		}
 
+		if ( is_tag() ) {
+			$data['type']     = $this->config->get_type_by_prefix( _FW_Extension_Sidebars_Config::TAXONOMIES_PREFIX );
+			$data['sub_type'] = 'post_tag';
+			$data['id']       = get_query_var( 'tag' );
+
+			$result = $this->get_preset_sidebars( $data );
+			if ( $result ) {
+				return $result;
+			}
+		}
+
 		if ( is_tax() ) {
 			$term_obj         = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
 			$data['type']     = $this->config->get_type_by_prefix( _FW_Extension_Sidebars_Config::TAXONOMIES_PREFIX );

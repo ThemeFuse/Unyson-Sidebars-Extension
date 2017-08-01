@@ -184,7 +184,7 @@ class _FW_Extension_Sidebars_Frontend {
 		if ( is_tag() ) {
 			$data['type']     = $this->config->get_type_by_prefix( _FW_Extension_Sidebars_Config::TAXONOMIES_PREFIX );
 			$data['sub_type'] = 'post_tag';
-			$data['id']       = get_query_var( 'tag' );
+			$data['id']       = fw_akg( 'term_id', get_queried_object() );
 
 			$result = $this->get_preset_sidebars( $data );
 			if ( $result ) {

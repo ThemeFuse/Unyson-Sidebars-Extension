@@ -164,7 +164,8 @@ class FW_Extension_Sidebars extends FW_Extension {
 				'missingSidebarName'    => __( 'No sidebar name specified', 'fw' ),
 				'newSidebarPlaceholder' => __( 'Sidebar Name', 'fw' ),
 				'newSidebarLabel'       => __( 'New Sidebar', 'fw' ),
-				'addSidebarButtonTxt'   => __( 'Add', 'fw' )
+				'addSidebarButtonTxt'   => __( 'Add', 'fw' ),
+				'msgToConfirmDelete'    => __( 'Are you sure you want to delete it?', 'fw' ),
 			) );
 		}
 	}

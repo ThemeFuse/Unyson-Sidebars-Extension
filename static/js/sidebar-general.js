@@ -19,13 +19,19 @@ var fwSidebars;
 				fwSidebars.removeSidebar(data.sidebarId);
 			});
 
-			fwEvents.on('fw:sidebars:remove:sidebar:click', function (data) {
+			fwEvents.on( 'fw:sidebars:remove:sidebar:click', function ( data ) {
 				//todo: ajax manager
-				if (!fwSidebars.isBusy) {
-					fwSidebars.removeSidebarAjax(data);
+				if ( ! fwSidebars.isBusy ) {
+
+					var ask = confirm( PhpVar.msgToConfirmDelete );
+					if ( ! ask ) {
+						return false;
+					}
+
+					fwSidebars.removeSidebarAjax( data );
 				}
 				data.event.stopPropagation();
-			});
+			} );
 
 			/**
 			 * Ajax delete preset
@@ -461,48 +467,49 @@ var fwSidebars;
 		 * Draw and activate button for delete on SIDEBARS
 		 */
 		initDeleteButtons: function () {
-			var dynamicSidebars = PhpVar.dynamicSidebars;
-			var html = '<a href="#" title="Delete sidebar" class="fw-ext-sidebars-delete-button dashicons fw-x"></a>' +
-				'<span class="fw-ext-sidebars-deleting" style="display: none;"></span>';
+			var dynamicSidebars = PhpVar.dynamicSidebars,
+				html = '<a href="#" title="Delete sidebar" class="fw-ext-sidebars-delete-button dashicons fw-x"></a><span class="fw-ext-sidebars-deleting" style="display: none;"></span>';
+
 			for (var i = 0; i < dynamicSidebars.length; i++) {
-				if ($('#' + dynamicSidebars[i]).prev('.sidebar-name').length == 0)
-					$('#' + dynamicSidebars[i]).find('.sidebar-name').find('.sidebar-name-arrow').after(html);
-				else
-					$('#' + dynamicSidebars[i]).prev('.sidebar-name').find('.sidebar-name-arrow').after(html);
+				var sidebar = $( '#' + dynamicSidebars[ i ] );
+
+				if ( sidebar.find( '.sidebar-name .fw-ext-sidebars-delete-button' ).length ) {
+					continue;
+				}
+				sidebar.find( '.sidebar-name button' ).after( html );
 			}
 
-			$('.fw-ext-sidebars-delete-button').each(function () {
-				fwSidebars.initQTip($(this));
-			});
+			var deleteBtn = $( '.fw-ext-sidebars-delete-button' );
 
-			$('.fw-ext-sidebars-delete-button').on('click', function (e) {
-				fwEvents.trigger('fw:sidebars:remove:sidebar:click', {$this: $(this), event: e});
+			deleteBtn.each( function () {
+				fwSidebars.initQTip( $( this ) );
+			} );
+
+			deleteBtn.on( 'click', function ( e ) {
+				fwEvents.trigger( 'fw:sidebars:remove:sidebar:click', {$this: $( this ), event: e} );
 				return false;
-			});
-
+			} );
 		},
 
 		/**
 		 *  Delete sidebar ajax
 		 */
 		removeSidebarAjax: function (data) {
-			fwSidebars.isBusy = true;
-			var $deleteButton = data.$this;
-			var $sidebarElem = data.$this.parent().parent();
-			var sidebarId = $sidebarElem.attr('id');
 
-			if ($sidebarElem.data('blocked')) {
+			fwSidebars.isBusy = true;
+
+			var $sidebarElem = data.$this.parent().parent(),
+				sidebarId    = $sidebarElem.attr( 'id' ),
+				postData     = {action: 'delete_sidebar_ajax', sidebar: sidebarId};
+
+			if ( $sidebarElem.data( 'blocked' ) ) {
 				return false;
 			}
 
 			$sidebarElem.data('blocked', true);
 			$sidebarElem.find('.fw-ext-sidebars-deleting').show();
 
-			var data = {
-				action: 'delete_sidebar_ajax',
-				sidebar: sidebarId
-			}
-			$.post(ajaxurl, data, function (response) {
+			$.post(ajaxurl, postData, function (response) {
 				$sidebarElem.data('blocked', false);
 				$sidebarElem.find('.fw-ext-sidebars-deleting').hide();
 				if (response.success) {
@@ -556,16 +563,16 @@ var fwSidebars;
 			}
 
 			$currentTab.find('.placeholders')
-				.addClass('empty')
-				.find('.fw-ext-sidebars-location')
-				.addClass('empty');
+			           .addClass('empty')
+			           .find('.fw-ext-sidebars-location')
+			           .addClass('empty');
 
 			if (possibleColors && possibleColors.colors) {
 				$currentTab.find('.placeholders')
-					.removeClass('empty')
-					.find('.fw-ext-sidebars-location')
-					.slice(0, possibleColors.colors)
-					.removeClass('empty');
+				           .removeClass('empty')
+				           .find('.fw-ext-sidebars-location')
+				           .slice(0, possibleColors.colors)
+				           .removeClass('empty');
 			}
 		},
 
@@ -638,25 +645,25 @@ var fwSidebars;
 		 */
 		renderCreatedTabPreset: function (slug, preset, label, description) {
 			var html = '<div class="fw-ext-sidebars-created-tab-preset" data-type="' + slug + '" data-preset-id="' + preset + '" >' +
-				'<span class="fw-ext-sidebars-preset-edit-span">' +
-				'<span class="spinner fw-ext-sidebars-preset-editing" style="display: none;"></span>' +
-				'<a href="#" class="fw-ext-sidebars-preset-edit" >' + label + '</a>' +
-				'<span class="fw-ext-sidebars-desc">&nbsp;' + description + '</span>' +
-				'</span>' +
-				'<span class="fw-ext-sidebars-preset-remove-span">' +
-				'<a href="#" class="fw-ext-sidebars-preset-remove dashicons fw-x"></a>' +
-				'</span>' +
-				'<span class="spinner fw-ext-sidebars-preset-removing" style="display: none;"></span>' +
-				'</div>'
+			           '<span class="fw-ext-sidebars-preset-edit-span">' +
+			           '<span class="spinner fw-ext-sidebars-preset-editing" style="display: none;"></span>' +
+			           '<a href="#" class="fw-ext-sidebars-preset-edit" >' + label + '</a>' +
+			           '<span class="fw-ext-sidebars-desc">&nbsp;' + description + '</span>' +
+			           '</span>' +
+			           '<span class="fw-ext-sidebars-preset-remove-span">' +
+			           '<a href="#" class="fw-ext-sidebars-preset-remove dashicons fw-x"></a>' +
+			           '</span>' +
+			           '<span class="spinner fw-ext-sidebars-preset-removing" style="display: none;"></span>' +
+			           '</div>'
 
 			$presetList = $('.fw-ext-sidebars-preset-list');
 
 			var $replaceItem = $presetList.find('div[data-type="' + slug + '"][data-preset-id="' + preset + '"]');
 			if ($replaceItem.length) {
 				$replaceItem.data('type', slug)
-					.data('preset-id', preset)
-					.find('.fw-ext-sidebars-preset-edit')
-					.text(label);
+				            .data('preset-id', preset)
+				            .find('.fw-ext-sidebars-preset-edit')
+				            .text(label);
 				//move $replaceItem down to list
 				$cloneItem = $replaceItem.clone(true, true);
 				$replaceItem.remove();
@@ -871,12 +878,16 @@ var fwSidebars;
 				'<div class="widgets-holder-wrap closed">' +
 				'<div id="' + sidebar.id + '" class="widgets-sortables">' +
 				'<div class="sidebar-name">' +
-				'<div class="sidebar-name-arrow"><br /></div>' +
+				'<button type="button" class="handlediv hide-if-no-js" aria-expanded="false">' +
+				'<span class="screen-reader-text">' + sidebar.name + '</span>' +
+				'<span class="toggle-indicator" aria-hidden="true"></span>' +
+				'</button>' +
 				'<a href="#" title="Delete sidebar" class="fw-ext-sidebars-delete-button dashicons fw-x"></a>' +
 				'<span class="fw-ext-sidebars-deleting" style="display: none;"></span>' +
 				'<h3>' + sidebar.name + ' <span class="spinner"></span></h3>' +
 				'</div>' +
-				'<div class="sidebar-description"></div></div>' +
+				'<div class="sidebar-description"></div>' +
+				'</div>' +
 				'</div>';
 
 			var $newElement = $(html);

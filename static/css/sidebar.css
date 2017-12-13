@@ -471,6 +471,10 @@ div.widget-liquid-right {
 	box-sizing: border-box;
 }
 
+body.rtl div.widget-liquid-left {
+	float: right;
+}
+
 .wrap {
 	margin: 10px 20px 0 2px;
 }

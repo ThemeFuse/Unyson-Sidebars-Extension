@@ -79,7 +79,7 @@ class _FW_Extension_Sidebars_Frontend {
 	public function get_preset_position() {
 		$preset = $this->get_current_page_preset();
 
-		return $preset['position'];
+		return ! empty( $preset['position'] ) ? $preset['position'] : false;
 	}
 
 	/**

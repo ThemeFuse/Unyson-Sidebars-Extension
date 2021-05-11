@@ -147,7 +147,9 @@ class FW_Extension_Sidebars extends FW_Extension {
 				array( 'fw-events', 'jquery', 'jquery-ui-autocomplete', 'fw' ),
 				fw()->manifest->get_version()
 			);
-			wp_localize_script( 'fw-extension-' . $this->get_name() . '-autocomplete-js', 'noMatchesFoundMsg', __( 'No matches found', 'fw' ) );
+			wp_localize_script( 'fw-extension-' . $this->get_name() . '-autocomplete-js', 'noMatchesFoundMsg', array(
+				'noMatchesFoundMsg' => __( 'No matches found', 'fw' ) 
+			) );
 
 			wp_enqueue_script( 'fw-extension-' . $this->get_name() . '-general-js',
 				$this->get_declared_URI( '/static/js/sidebar-general.js' ),

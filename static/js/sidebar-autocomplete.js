@@ -28,7 +28,7 @@
 
 						if (data.data.items.length === 0) {
 							response({
-								label: noMatchesFoundMsg
+								label: noMatchesFoundMsg.noMatchesFoundMsg
 							});
 						} else {
 							response( $.map( data.data.items, function( val, index) {

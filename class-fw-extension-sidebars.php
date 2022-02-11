@@ -92,6 +92,7 @@ class FW_Extension_Sidebars extends FW_Extension {
 	private function  add_admin_actions() {
 		add_action( 'admin_enqueue_scripts', array( $this, '_admin_action_enqueue_scripts' ) );
 		add_action( 'sidebar_admin_page', array( $this, '_admin_action_render_partial' ) );
+		add_action( 'after_setup_theme', array( $this, '_admin_action_after_setup_theme' ), 11, 2 );
 
 		if ( current_user_can( 'edit_theme_options' ) ) {
 			add_action( 'wp_ajax_add_new_sidebar_ajax', array( $this, '_admin_action_add_new_sidebar_ajax' ) );
@@ -269,6 +270,14 @@ class FW_Extension_Sidebars extends FW_Extension {
 			'data_positions_options' => $this->get_data_positions_options(), //used for image-picker
 			'sidebars'               => $sidebars, //used for selectize options on grouped and specific tabs
 		) );
+	}
+
+	/**
+	 * Render partial on widgets.php page
+	 * @internal
+	 */
+	public function _admin_action_after_setup_theme() {
+		remove_theme_support( 'widgets-block-editor' );
 	}
 
 	public function get_presets_sidebars() {
